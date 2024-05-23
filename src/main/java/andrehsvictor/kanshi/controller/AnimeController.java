@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import andrehsvictor.kanshi.dto.AnimeDTO;
@@ -27,12 +28,12 @@ public class AnimeController {
     }
 
     @GetMapping("/api/1.0/animes/{id}")
-    public ResponseEntity<AnimeDTO> findById(Long id) {
+    public ResponseEntity<AnimeDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(animeService.findById(id));
     }
 
     @PatchMapping("/api/1.0/animes/{id}/like")
-    public ResponseEntity<Void> like(Long id, JwtAuthenticationToken token) {
+    public ResponseEntity<Void> like(@PathVariable Long id, JwtAuthenticationToken token) {
         animeService.like(id, token);
         return ResponseEntity.ok().build();
     }
