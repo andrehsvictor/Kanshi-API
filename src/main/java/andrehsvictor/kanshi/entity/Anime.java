@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class Anime {
     private LocalDate releaseDate;
     private String imageUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "likes", joinColumns = @JoinColumn(name = "anime_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> likedBy = new HashSet<>();
 
