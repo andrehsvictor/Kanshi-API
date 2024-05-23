@@ -33,3 +33,5 @@ build/
 .vscode/
 
 private_key.pem
+
+META-INF/
