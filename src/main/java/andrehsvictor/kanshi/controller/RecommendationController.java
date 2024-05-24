@@ -33,6 +33,11 @@ public class RecommendationController {
         return ResponseEntity.ok(recommendationService.findById(id));
     }
 
+    @GetMapping("/api/1.0/animes/{animeId}/recommendations/all")
+    public ResponseEntity<Page<RecommendationDTO>> findAllByAnimeId(@PathVariable Long animeId, Pageable pageable) {
+        return ResponseEntity.ok(recommendationService.findAllByAnimeId(animeId, pageable));
+    }
+
     @PostMapping("/api/1.0/animes/{animeId}/recommendations")
     public ResponseEntity<RecommendationDTO> save(@PathVariable Long animeId, JwtAuthenticationToken token,
             @RequestBody SaveOrUpdateRecommendationDTO saveRecommendationDTO) {
