@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: America/Sao_Paulo
+    ports:
+      - 5432:5432
+    restart: on-failure
+    networks:
+      - kanshi-network
+  api:
+    image: andrehsvictor/kanshi-api
+    environment:
+      spring.datasource.url: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      spring.datasource.username: ${POSTGRES_USER}
+      spring.datasource.password: ${POSTGRES_PASSWORD}
+      TZ: America/Sao_Paulo
+    ports:
+      - 8080:8080
+    restart: on-failure
+    networks:
+      - kanshi-network
+    depends_on:
+      - db
+networks:
+  kanshi-network:
+    driver: bridge
+    name: kanshi-network
