@@ -97,6 +97,25 @@ class RecommendationServiceTest {
     }
 
     @Test
+    void findAllByAnimeId_shouldReturnRecommendations() {
+        Recommendation recommendation = RecommendationFactory.create();
+        RecommendationDTO recommendationDTO = modelMapper.map(recommendation, RecommendationDTO.class);
+
+        when(animeRepository.findById(1L)).thenReturn(Optional.of(AnimeFactory.create()));
+        when(recommendationRepository.findAllByAnimeId(1L, Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of(recommendation)));
+        when(mockModelMapper.map(recommendation, RecommendationDTO.class)).thenReturn(recommendationDTO);
+
+        List<RecommendationDTO> recommendations = recommendationService.findAllByAnimeId(1L, Pageable.unpaged())
+                .toList();
+
+        assertThat(recommendations).contains(recommendationDTO);
+
+        verify(recommendationRepository).findAllByAnimeId(1L, Pageable.unpaged());
+        verify(mockModelMapper).map(recommendation, RecommendationDTO.class);
+    }
+
+    @Test
     void save_shouldReturnRecommendation() {
         Recommendation recommendation = RecommendationFactory.create();
         Anime anime = AnimeFactory.create();
@@ -360,7 +379,7 @@ class RecommendationServiceTest {
         when(jwtAuthenticationToken.getToken().getSubject()).thenReturn("user1");
         when(mockModelMapper.map(saveRecommendationDTO, Recommendation.class)).thenReturn(recommendation);
         // when(mockModelMapper.map(recommendation, RecommendationDTO.class))
-        //         .thenReturn(modelMapper.map(recommendation, RecommendationDTO.class));
+        // .thenReturn(modelMapper.map(recommendation, RecommendationDTO.class));
         when(recommendationRepository.save(any(Recommendation.class))).thenReturn(recommendation);
         when(animeRepository.findById(1L)).thenReturn(Optional.of(recommendation.getAnime()));
         when(userRepository.findByEmail(jwtAuthenticationToken.getToken().getSubject())).thenReturn(Optional.empty());
