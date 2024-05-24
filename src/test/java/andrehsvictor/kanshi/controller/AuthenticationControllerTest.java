@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import andrehsvictor.kanshi.dto.AuthenticateDTO;
 import andrehsvictor.kanshi.entity.User;
 import andrehsvictor.kanshi.repository.RecommendationRepository;
 import andrehsvictor.kanshi.repository.UserRepository;
@@ -39,7 +40,7 @@ class AuthenticationControllerTest extends AbstractControllerTest {
     @Test
     void authenticate_shouldReturnToken() {
         given()
-                .body("{\"username\": \"user1\", \"password\": \"P4ssword\"}")
+                .body(new AuthenticateDTO("user1@kanshi.io", "P4ssword"))
                 .contentType("application/json")
                 .when()
                 .post("/authenticate")
