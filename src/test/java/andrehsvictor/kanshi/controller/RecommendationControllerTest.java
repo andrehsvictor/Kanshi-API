@@ -82,7 +82,14 @@ class RecommendationControllerTest extends AbstractControllerTest {
                 .statusCode(200)
                 .body("content.size()", equalTo(1))
                 .body("content[0].comment", equalTo(recommendation.getComment()))
-                .body("content[0].rating", equalTo(recommendation.getRating().floatValue()));
+                .body("content[0].rating", equalTo(recommendation.getRating().floatValue()))
+                .body("content[0].anime.id", equalTo(recommendation.getAnime().getId().intValue()))
+                .body("content[0].anime.title", equalTo(recommendation.getAnime().getTitle()))
+                .body("content[0].anime.description", equalTo(recommendation.getAnime().getDescription()))
+                .body("content[0].anime.episodes", equalTo(recommendation.getAnime().getEpisodes()))
+                .body("content[0].user.username", equalTo(recommendation.getUser().getUsername()))
+                .body("content[0].user.id", equalTo(recommendation.getUser().getId().intValue()))
+                .body("content[0].id", equalTo(recommendation.getId().intValue()));
     }
 
     @Test
@@ -95,7 +102,14 @@ class RecommendationControllerTest extends AbstractControllerTest {
                 .then()
                 .statusCode(200)
                 .body("comment", equalTo(recommendation.getComment()))
-                .body("rating", equalTo(recommendation.getRating().floatValue()));
+                .body("rating", equalTo(recommendation.getRating().floatValue()))
+                .body("anime.id", equalTo(recommendation.getAnime().getId().intValue()))
+                .body("anime.title", equalTo(recommendation.getAnime().getTitle()))
+                .body("anime.description", equalTo(recommendation.getAnime().getDescription()))
+                .body("anime.episodes", equalTo(recommendation.getAnime().getEpisodes()))
+                .body("user.username", equalTo(recommendation.getUser().getUsername()))
+                .body("user.id", equalTo(recommendation.getUser().getId().intValue()))
+                .body("id", equalTo(recommendation.getId().intValue()));
     }
 
     @Test
@@ -109,11 +123,18 @@ class RecommendationControllerTest extends AbstractControllerTest {
                 .statusCode(200)
                 .body("content.size()", equalTo(1))
                 .body("content[0].comment", equalTo(recommendation.getComment()))
-                .body("content[0].rating", equalTo(recommendation.getRating().floatValue()));
+                .body("content[0].rating", equalTo(recommendation.getRating().floatValue()))
+                .body("content[0].anime.id", equalTo(recommendation.getAnime().getId().intValue()))
+                .body("content[0].anime.title", equalTo(recommendation.getAnime().getTitle()))
+                .body("content[0].anime.description", equalTo(recommendation.getAnime().getDescription()))
+                .body("content[0].anime.episodes", equalTo(recommendation.getAnime().getEpisodes()))
+                .body("content[0].user.username", equalTo(recommendation.getUser().getUsername()))
+                .body("content[0].user.id", equalTo(recommendation.getUser().getId().intValue()))
+                .body("content[0].id", equalTo(recommendation.getId().intValue()));
     }
 
     @Test
-    void save_shouldReturnSavedRecommendation() {
+    void recommend_shouldReturnSavedRecommendation() {
         SaveOrUpdateRecommendationDTO saveRecommendationDTO = new SaveOrUpdateRecommendationDTO();
         saveRecommendationDTO.setComment("Great anime");
         saveRecommendationDTO.setRating(9.0);
@@ -128,7 +149,10 @@ class RecommendationControllerTest extends AbstractControllerTest {
                 .then()
                 .statusCode(200)
                 .body("comment", equalTo(saveRecommendationDTO.getComment()))
-                .body("rating", equalTo(saveRecommendationDTO.getRating().floatValue()));
+                .body("rating", equalTo(saveRecommendationDTO.getRating().floatValue()))
+                .body("anime.id", equalTo(anime.getId().intValue()))
+                .body("user.username", equalTo(user.getUsername()))
+                .body("user.id", equalTo(user.getId().intValue()));
 
         given()
                 .contentType("application/json")
@@ -137,7 +161,12 @@ class RecommendationControllerTest extends AbstractControllerTest {
                 .get("/recommendations")
                 .then()
                 .statusCode(200)
-                .body("content.size()", equalTo(2));
+                .body("content.size()", equalTo(2))
+                .body("content[1].comment", equalTo(saveRecommendationDTO.getComment()))
+                .body("content[1].rating", equalTo(saveRecommendationDTO.getRating().floatValue()))
+                .body("content[1].anime.id", equalTo(anime.getId().intValue()))
+                .body("content[1].user.username", equalTo(user.getUsername()))
+                .body("content[1].user.id", equalTo(user.getId().intValue()));
     }
 
     @Test
@@ -179,7 +208,7 @@ class RecommendationControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void save_whenUserAlreadyRecommended_shouldReturnBadRequest() {
+    void recommend_whenUserAlreadyRecommended_shouldReturnBadRequest() {
         SaveOrUpdateRecommendationDTO saveRecommendationDTO = new SaveOrUpdateRecommendationDTO();
         saveRecommendationDTO.setComment("Great anime");
         saveRecommendationDTO.setRating(9.0);
