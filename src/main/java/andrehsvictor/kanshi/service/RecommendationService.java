@@ -38,6 +38,13 @@ public class RecommendationService {
         return recommendations.map(recommendation -> modelMapper.map(recommendation, RecommendationDTO.class));
     }
 
+    public Page<RecommendationDTO> findAllByAnimeId(Long animeId, Pageable pageable) {
+        animeRepository.findById(animeId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+        Page<Recommendation> recommendations = recommendationRepository.findAllByAnimeId(animeId, pageable);
+        return recommendations.map(recommendation -> modelMapper.map(recommendation, RecommendationDTO.class));
+    }
+
     public RecommendationDTO findById(Long id) {
         Recommendation recommendation = recommendationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recommendation not found"));
