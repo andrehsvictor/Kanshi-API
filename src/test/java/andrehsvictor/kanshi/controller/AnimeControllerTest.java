@@ -73,7 +73,12 @@ class AnimeControllerTest extends AbstractControllerTest {
                 .body("content.size()", is(1))
                 .body("content[0].title", is(anime.getTitle()))
                 .body("content[0].description", is(anime.getDescription()))
-                .body("content[0].episodes", is(anime.getEpisodes()));
+                .body("content[0].episodes", is(anime.getEpisodes()))
+                .body("content[0].id", is(anime.getId().intValue()))
+                .body("totalElements", is(1))
+                .body("totalPages", is(1))
+                .body("size", is(20))
+                .body("number", is(0));
     }
 
     @Test
@@ -87,7 +92,10 @@ class AnimeControllerTest extends AbstractControllerTest {
                 .statusCode(200)
                 .body("title", is(anime.getTitle()))
                 .body("description", is(anime.getDescription()))
-                .body("episodes", is(anime.getEpisodes()));
+                .body("episodes", is(anime.getEpisodes()))
+                .body("likedBy.size()", is(0))
+                .body("genres.size()", is(0))
+                .body("id", is(anime.getId().intValue()));
     }
 
     @Test
@@ -114,6 +122,17 @@ class AnimeControllerTest extends AbstractControllerTest {
         Anime updatedAnime = animeRepository.findById(anime.getId()).get();
         assertThat(updatedAnime.getLikedBy().size(), is(1));
         assertThat(updatedAnime.getLikedBy().iterator().next().getId(), is(user.getId()));
+
+        given()
+                .contentType("application/json")
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/animes/" + anime.getId())
+                .then()
+                .statusCode(200)
+                .body("likedBy.size()", is(1))
+                .body("likedBy[0].id", is(user.getId().intValue()))
+                .body("likedBy[0].username", is(user.getUsername()));
     }
 
     @Test
@@ -131,6 +150,15 @@ class AnimeControllerTest extends AbstractControllerTest {
 
         Anime updatedAnime = animeRepository.findById(anime.getId()).get();
         assertThat(updatedAnime.getLikedBy().size(), is(0));
+
+        given()
+                .contentType("application/json")
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/animes/liked")
+                .then()
+                .statusCode(200)
+                .body("size()", is(0));
     }
 
     @Test
