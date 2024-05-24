@@ -25,8 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
-import com.nimbusds.jwt.JWT;
-
 import andrehsvictor.kanshi.dto.AnimeDTO;
 import andrehsvictor.kanshi.dto.ShortAnimeDTO;
 import andrehsvictor.kanshi.entity.Anime;
