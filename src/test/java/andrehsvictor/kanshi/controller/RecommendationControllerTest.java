@@ -99,6 +99,20 @@ class RecommendationControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void findAllByAnimeId_shouldReturnListOfRecommendations() {
+        given()
+                .contentType("application/json")
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get("/animes/" + anime.getId() + "/recommendations/all")
+                .then()
+                .statusCode(200)
+                .body("content.size()", equalTo(1))
+                .body("content[0].comment", equalTo(recommendation.getComment()))
+                .body("content[0].rating", equalTo(recommendation.getRating().floatValue()));
+    }
+
+    @Test
     void save_shouldReturnSavedRecommendation() {
         SaveOrUpdateRecommendationDTO saveRecommendationDTO = new SaveOrUpdateRecommendationDTO();
         saveRecommendationDTO.setComment("Great anime");
