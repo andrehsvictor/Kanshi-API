@@ -29,8 +29,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Recommendation> recommendations = new HashSet<>();
     
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     public User() {
     }
