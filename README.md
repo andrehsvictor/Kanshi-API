@@ -1,6 +1,6 @@
 # Kanshi API
 
-<img src="https://img.shields.io/badge/coverage-70%25-blue" alt="coverage badge"><img src="https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen" alt="dependencies badge"><img src="https://img.shields.io/badge/license-MIT-green" alt="license badge"><img src="https://img.shields.io/badge/version-1.0.1-blue" alt="version badge">
+<img src="https://img.shields.io/badge/coverage-70%25-blue" alt="coverage badge"> <img src="https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen" alt="dependencies badge"> <img src="https://img.shields.io/badge/license-MIT-green" alt="license badge"> <img src="https://img.shields.io/badge/version-1.0.1-blue" alt="version badge">
 
 This is the API for the Kanshi project. It is a RESTful API that allows users to create, read, update, and delete data from the Kanshi database.
 
