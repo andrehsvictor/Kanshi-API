@@ -39,7 +39,7 @@ public class RecommendationController {
     }
 
     @PostMapping("/api/1.0/animes/{animeId}/recommendations")
-    public ResponseEntity<RecommendationDTO> save(@PathVariable Long animeId, JwtAuthenticationToken token,
+    public ResponseEntity<RecommendationDTO> recommend(@PathVariable Long animeId, JwtAuthenticationToken token,
             @RequestBody SaveOrUpdateRecommendationDTO saveRecommendationDTO) {
         return ResponseEntity.ok(recommendationService.save(saveRecommendationDTO, animeId, token));
     }
