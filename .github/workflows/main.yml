@@ -24,6 +24,7 @@ jobs:
         run: mvn test
 
       - name: Extract metadata for Docker image
+        id: metadata
         uses: docker/metadata-action@v5
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/kanshi-api
