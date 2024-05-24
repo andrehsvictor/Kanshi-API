@@ -28,8 +28,8 @@ public class Recommendation {
 
     private Double rating;
     private String comment;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     public Recommendation() {
     }
