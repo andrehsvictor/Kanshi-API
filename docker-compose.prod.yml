@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres
+    env_file: .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -13,6 +14,7 @@ services:
       - kanshi-network
   api:
     image: andrehsvictor/kanshi-api
+    env_file: .env
     environment:
       spring.datasource.url: jdbc:postgresql://db:5432/${POSTGRES_DB}
       spring.datasource.username: ${POSTGRES_USER}
